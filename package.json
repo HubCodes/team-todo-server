@@ -1,0 +1,15 @@
+{
+  "name": "team-todo-server",
+  "version": "0.0.1",
+  "description": "DSM 3학년 개인 프로젝트",
+  "main": "dist/index.js",
+  "repository": "https://github.com/HubCodes/team-todo-server",
+  "author": "HubCodes",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^24.0.11",
+    "jest": "^24.7.1",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.4.3"
+  }
+}
