@@ -1,7 +1,7 @@
 import { injectable, inject } from "inversify";
-import injectableList from "injectableList";
+import injectableList from "../injectableList";
 import { UserRepository } from "./repository/User";
-import { UserID } from "entity/User";
+import { UserID } from "../entity/User";
 
 @injectable()
 export class IsValidUserBusiness {
@@ -9,7 +9,7 @@ export class IsValidUserBusiness {
     @inject(injectableList.UserRepository) private userRepository: UserRepository
   ) {}
 
-  public async removeUser(id: UserID, pw: string): Promise<boolean> {
+  public async isValidUser(id: UserID, pw: string): Promise<boolean> {
     return await this.userRepository.isValidUser(id, pw);
   }
 }

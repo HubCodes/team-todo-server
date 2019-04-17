@@ -1,8 +1,8 @@
 import { injectable, inject } from "inversify";
-import injectableList from "injectableList";
+import injectableList from "../injectableList";
 import { TodoRepository } from "./repository/Todo";
-import { TodoID } from "entity/Todo";
-import { UserID } from "entity/User";
+import { TodoID } from "../entity/Todo";
+import { UserID } from "../entity/User";
 
 @injectable()
 export class RemoveAssignedUserFromTodoBusiness {

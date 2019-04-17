@@ -1,7 +1,7 @@
 import { injectable, inject } from "inversify";
-import injectableList from "injectableList";
+import injectableList from "../injectableList";
 import { TodoRepository } from "./repository/Todo";
-import { TodoID } from "entity/Todo";
+import { TodoID } from "../entity/Todo";
 
 @injectable()
 export class ChangeDescriptionOfTodoBusiness {

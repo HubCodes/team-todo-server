@@ -1,7 +1,7 @@
 import { injectable, inject } from "inversify";
-import injectableList from "injectableList";
+import injectableList from "../injectableList";
 import { UserRepository } from "./repository/User";
-import { UserID, User } from "entity/User";
+import { UserID, User } from "../entity/User";
 
 @injectable()
 export class GetUserBusiness {

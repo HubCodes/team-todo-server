@@ -1,8 +1,8 @@
-import { TodoID, Todo } from "entity/Todo";
+import { TodoID, Todo } from "../entity/Todo";
 import { injectable, inject } from "inversify";
-import injectableList from "injectableList";
+import injectableList from "../injectableList";
 import { TodoRepository, CreateTodoInfo } from "./repository/Todo";
-import { UserID } from "entity/User";
+import { UserID } from "../entity/User";
 
 @injectable()
 export class CreateTodoBusiness {

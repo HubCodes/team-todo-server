@@ -1,5 +1,5 @@
 import { injectable, inject } from "inversify";
-import injectableList from "injectableList";
+import injectableList from "../injectableList";
 import { UserRepository, CreateUserInfo } from "./repository/User";
 
 @injectable()
