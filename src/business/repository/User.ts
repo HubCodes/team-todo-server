@@ -1,4 +1,4 @@
-import { User, UserID } from "entity/User";
+import { User, UserID } from "../../entity/User";
 
 export type CreateUserInfo = User;
 

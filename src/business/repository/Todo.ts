@@ -1,6 +1,6 @@
-import { TodoID, Todo } from "entity/Todo";
-import { Omit } from "utility/Omit";
-import { UserID } from "entity/User";
+import { TodoID, Todo } from "../../entity/Todo";
+import { Omit } from "../../utility/Omit";
+import { UserID } from "../../entity/User";
 
 export type CreateTodoInfo = Omit<Todo, "id">;
 

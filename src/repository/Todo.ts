@@ -1,16 +1,17 @@
-import { TodoRepository, CreateTodoInfo } from "business/repository/Todo";
-import { TodoID, Todo } from "entity/Todo";
+import { TodoRepository, CreateTodoInfo } from "../business/repository/Todo";
+import { TodoID, Todo } from "../entity/Todo";
 import uuid from "uuid/v4";
 import {
   makeTodoNotFoundError,
   makeUserAlreadyAssignedError,
   makeTodoHasNotAssignedAnyUser
-} from "business/repository/Error";
-import { UserID } from "entity/User";
+} from "../business/repository/Error";
+import { UserID } from "../entity/User";
 import { injectable, inject } from "inversify";
-import injectableList from "injectableList";
-import { UserRepository } from "business/repository/User";
+import injectableList from "../injectableList";
+import { UserRepository } from "../business/repository/User";
 import { reject } from "lodash";
+import { todoStore } from "./TodoKeyValueStore";
 
 @injectable()
 export class InmemoryTodoRepository implements TodoRepository {
@@ -20,7 +21,7 @@ export class InmemoryTodoRepository implements TodoRepository {
     @inject(injectableList.UserRepository)
     private userRepository: UserRepository
   ) {
-    this.keyValue = new Map();
+    this.keyValue = todoStore;
   }
 
   public async createTodo(createTodoInfo: CreateTodoInfo): Promise<TodoID> {
@@ -60,10 +61,7 @@ export class InmemoryTodoRepository implements TodoRepository {
     todo.assigned.push(await this.userRepository.getUser(userId));
   }
 
-  public async removeAssignedUserFromTodo(
-    todoId: TodoID,
-    userId: UserID
-  ): Promise<void> {
+  public async removeAssignedUserFromTodo(todoId: TodoID, userId: UserID): Promise<void> {
     const todo = this.keyValue.get(todoId);
     if (!todo) {
       throw makeTodoNotFoundError();
@@ -76,10 +74,7 @@ export class InmemoryTodoRepository implements TodoRepository {
     todo.assigned = reject(todo.assigned, { id: userId });
   }
 
-  public async changeDescriptionOfTodo(
-    todoId: TodoID,
-    description: string
-  ): Promise<void> {
+  public async changeDescriptionOfTodo(todoId: TodoID, description: string): Promise<void> {
     const todo = this.keyValue.get(todoId);
     if (!todo) {
       throw makeTodoNotFoundError();
@@ -97,10 +92,7 @@ export class InmemoryTodoRepository implements TodoRepository {
     todo.role = role;
   }
 
-  public async changeDueDateOfTodo(
-    todoId: TodoID,
-    dueDate: Date
-  ): Promise<void> {
+  public async changeDueDateOfTodo(todoId: TodoID, dueDate: Date): Promise<void> {
     const todo = this.keyValue.get(todoId);
     if (!todo) {
       throw makeTodoNotFoundError();

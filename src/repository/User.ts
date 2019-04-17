@@ -1,14 +1,15 @@
 import { injectable } from "inversify";
-import { UserRepository, CreateUserInfo } from "business/repository/User";
-import { User, UserID } from "entity/User";
-import { makeUserNotFoundError } from "business/repository/Error";
+import { UserRepository, CreateUserInfo } from "../business/repository/User";
+import { User, UserID } from "../entity/User";
+import { makeUserNotFoundError } from "../business/repository/Error";
+import { userStore } from "./UserKeyValueStore";
 
 @injectable()
 export class InmemoryUserRepository implements UserRepository {
   private keyValue: Map<UserID, User>;
 
   public constructor() {
-    this.keyValue = new Map();
+    this.keyValue = userStore;
   }
 
   public async createUser(createUserInfo: CreateUserInfo): Promise<void> {
