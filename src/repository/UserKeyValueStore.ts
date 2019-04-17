@@ -1,3 +1,4 @@
 import { UserID, User } from "../entity/User";
+import { PersistentMap } from "../utility/PersistentMap";
 
-export const userStore: Map<UserID, User> = new Map();
+export const userStore: PersistentMap<UserID, User> = new PersistentMap("./User.json");

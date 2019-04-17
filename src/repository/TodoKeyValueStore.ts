@@ -1,3 +1,4 @@
 import { UserID, User } from "../entity/User";
+import { PersistentMap } from "../utility/PersistentMap";
 
-export const todoStore: Map<UserID, User> = new Map();
+export const todoStore: PersistentMap<UserID, User> = new PersistentMap("./Todo.json");
