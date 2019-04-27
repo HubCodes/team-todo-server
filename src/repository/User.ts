@@ -1,7 +1,7 @@
 import { injectable } from "inversify";
 import { UserRepository, CreateUserInfo } from "../business/repository/User";
 import { User, UserID } from "../entity/User";
-import { makeUserNotFoundError } from "../business/repository/Error";
+import { makeUserNotFoundError, makeUserAlreadyAssignedError } from "../business/repository/Error";
 import { userStore } from "./UserKeyValueStore";
 
 @injectable()
@@ -14,6 +14,11 @@ export class InmemoryUserRepository implements UserRepository {
 
   public async createUser(createUserInfo: CreateUserInfo): Promise<void> {
     const { id } = createUserInfo;
+
+    if (this.keyValue.has(id)) {
+      throw makeUserAlreadyAssignedError(id);
+    }
+
     this.keyValue.set(id, createUserInfo as User);
   }
 
