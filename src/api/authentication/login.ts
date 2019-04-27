@@ -4,7 +4,7 @@ import injectableList from "../../injectableList";
 import { IsValidUserBusiness } from "../../business/isValidUser";
 import jwt from "jsonwebtoken";
 import { ApiError } from "../../api/Error";
-import { secretKey } from "../../config";
+import { secretKey, jwtSignAlgorithm } from "../../config";
 
 interface LoginRequest {
   id: string;
@@ -20,8 +20,10 @@ interface LoginFailureResponse {
 }
 
 function makeAccessToken() {
-  const expiry = Math.floor(Date.now() / 1000) + 60 * 60;
-  const token = jwt.sign({ exp: expiry }, secretKey);
+  const token = jwt.sign({ dummy: "dummy" }, secretKey, {
+    algorithm: jwtSignAlgorithm,
+    expiresIn: "1h"
+  });
 
   return token;
 }
