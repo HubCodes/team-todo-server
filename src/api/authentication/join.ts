@@ -3,17 +3,14 @@ import injectableList from "../../injectableList";
 import { CreateUserBusiness } from "../../business/createUser";
 import { Request, Response } from "express";
 import { CreateUserInfo } from "../../business/repository/User";
-
-interface JoinFailure {
-  reason: string;
-}
+import { Failure } from "../Error";
 
 function joinSuccess(res: Response) {
   res.status(201).send();
 }
 
 function joinFailure(res: Response, reason: string) {
-  res.status(409).send({ reason } as JoinFailure);
+  res.status(409).send({ reason } as Failure);
 }
 
 @injectable()
