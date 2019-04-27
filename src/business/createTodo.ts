@@ -7,7 +7,7 @@ import { UserID } from "../entity/User";
 @injectable()
 export class CreateTodoBusiness {
   public constructor(
-    @inject(injectableList.UserRepository)
+    @inject(injectableList.TodoRepository)
     private todoRepository: TodoRepository
   ) {}
 

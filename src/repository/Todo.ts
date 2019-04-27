@@ -10,7 +10,6 @@ import { UserID } from "../entity/User";
 import { injectable, inject } from "inversify";
 import injectableList from "../injectableList";
 import { UserRepository } from "../business/repository/User";
-import { reject } from "lodash";
 import { todoStore } from "./TodoKeyValueStore";
 
 @injectable()
@@ -42,6 +41,12 @@ export class InmemoryTodoRepository implements TodoRepository {
     return todo;
   }
 
+  public async getTodoList(): Promise<Todo[]> {
+    const todoList = Array.from(this.keyValue.values());
+
+    return todoList;
+  }
+
   public async assignUserToTodo(todoId: TodoID, userId: UserID): Promise<void> {
     const todo = this.keyValue.get(todoId);
     if (!todo) {
@@ -53,12 +58,12 @@ export class InmemoryTodoRepository implements TodoRepository {
     }
 
     for (const assignee of todo.assigned) {
-      if (assignee.id === userId) {
+      if (assignee === userId) {
         throw makeUserAlreadyAssignedError(userId);
       }
     }
 
-    todo.assigned.push(await this.userRepository.getUser(userId));
+    todo.assigned.push(userId);
   }
 
   public async removeAssignedUserFromTodo(todoId: TodoID, userId: UserID): Promise<void> {
@@ -71,7 +76,7 @@ export class InmemoryTodoRepository implements TodoRepository {
       throw makeTodoHasNotAssignedAnyUser();
     }
 
-    todo.assigned = reject(todo.assigned, { id: userId });
+    todo.assigned = todo.assigned.filter(element => element !== userId);
   }
 
   public async changeDescriptionOfTodo(todoId: TodoID, description: string): Promise<void> {
